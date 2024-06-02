@@ -5,7 +5,7 @@ class NLPServices():
 
     def Tokenization(self,text):
         words=word_tokenize(text)
-        return words
+        return {"tokenize":words,"StatusCode":201}
     
     def upload(self,file):
         try:
