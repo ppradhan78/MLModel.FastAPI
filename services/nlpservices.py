@@ -1,7 +1,10 @@
 from nltk.tokenize import sent_tokenize, word_tokenize 
 from fastapi import File, UploadFile
+import nltk
 
 class NLPServices():
+    def __init__(self):
+        nltk.download('punkt')
 
     def Tokenization(self,text):
         words=word_tokenize(text)
