@@ -1,0 +1,39 @@
+#1 Creating Virtual Environment & First Flask App 
+#   python -m venv venv_mlmfastapi
+
+#2 python -m venv venv_aifastapi     
+ # Switch to ve
+ # .\venv_mlmfastapi\Scripts\activate
+
+#3 Set enviroment  
+"""
+$env:PYTHONDONTWRITEBYTECODE=1
+"""
+#4 Install nessary packages
+"""
+pip install uvicorn
+pip install fastapi
+pip install -U numpy
+pip install -U nltk
+"""
+#5 Run application
+# uvicorn main:app --reload
+
+#6 Swagar
+"""
+http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/redoc
+"""
+
+#7 requirement
+# pip freeze > requirement.txt
+
+#8 deployment
+"""
+https://app.koyeb.com/
+Koyeb 
+"""
+
+ 
+
+ 

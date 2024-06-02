@@ -1,0 +1,36 @@
+ .\venv_fastapi\Scripts\activate
+
+pip install uvicorn
+pip install fastapi
+
+	
+
+uvicorn main:app --reload
+
+http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/redoc
+
+Path parameters
+
+pip install pyodbc
+
+python -m pip install pyodbc
+
+$env:FLASK_ENV= "development"
+
+$env:FLASK_DEBUG=1
+
+#2 Preventing __pycache__ files from being created 
+__pycache__
+$env:PYTHONDONTWRITEBYTECODE=1
+
+https://app.koyeb.com/
+
+Koyeb 
+
+prasanta.k.pradhan@wellsfargo.com
+
+myfastapidemo.azurewebsites.net
+
+https://myfastapidemo.azurewebsites.net/
+https://ppradhanfastapidemo.azurewebsites.net/
