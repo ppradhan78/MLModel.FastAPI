@@ -15,6 +15,8 @@ pip install uvicorn
 pip install fastapi
 pip install -U numpy
 pip install -U nltk
+pip install spacy
+pip install pytextrank
 """
 #5 Run application
 # uvicorn main:app --reload

@@ -1,0 +1,24 @@
+Tabnine: AI Autocomplete & Chat for Javascript, Python - Extension
+
+A Python Virtual Environment is an isolated space where you can work on your Python projects, separately from your system-installed Python.You can set up your own libraries and dependencies without affecting the system Python.
+
+Run 
+template.py.
+
+Create Virtual enviroment
+ 1. python -m venv <venvname>
+ python -m venv venv_textsum
+
+2. Activate Virtual enviroment
+run the activate script from script folder
+ .\<venvname>\Scripts\activate
+ .\venv_textsum\Scripts\activate
+
+Hugging Face is often called the GitHub of machine learning because it lets developers share and test their work openly. Hugging Face is known for its Transformers Python library, which simplifies the process of downloading and training ML models.
+https://pypi.org/
+python package
+
+pip install -r requirements.txt
+
+
+MLModel.FastAPI

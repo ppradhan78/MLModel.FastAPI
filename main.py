@@ -1,9 +1,18 @@
 from fastapi import FastAPI
 from services.nlpservices import NLPServices
 from fastapi import File, UploadFile
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app=FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 nlpServices=NLPServices();
 
 
@@ -29,3 +38,11 @@ def upload(file: UploadFile):
         return  nlpServices.upload(file)
     else:
         return {"message": "Invalid file type. Please upload txt file","StatusCode":400}
+    
+
+@app.post("/Summarization",tags=["FASTAPI for Summarization Text File"])
+def Summarization(file: UploadFile):
+    if file.content_type=='text/plain':
+        return  nlpServices.Summarization(file)
+    else:
+        return {"message": "Invalid file type. Please upload txt file","StatusCode":400}    
