@@ -85,7 +85,7 @@ class NLPServices():
             summary = nlargest(select_length, sentence_scores, key = sentence_scores.get)
             final_summary = [word for word in summary]
             summary = ' '.join(final_summary)
-            return {"summary":summary,"summary length":len(summary),"content length": len(content),"StatusCode":201}
+            return {"Summary":summary,"SummaryLength":len(summary),"ContentLength": len(content),"StatusCode":201}
         except Exception:
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
         finally:
