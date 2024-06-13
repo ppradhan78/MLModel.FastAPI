@@ -6,8 +6,11 @@ from nltk.tokenize import word_tokenize
 from nltk.tokenize import sent_tokenize 
 from heapq import nlargest
 from string import punctuation
+from nltk.stem import PorterStemmer
+
 class NLPServices():
     def __init__(self):
+        nltk.download('stopwords')
         nltk.download('punkt')
 
     def Tokenization(self,text):
@@ -41,6 +44,27 @@ class NLPServices():
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
         finally:
             file.file.close()
+
+    def TokenizationStopWordFile(self,file):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
+            
+            content=content.decode("utf-8")
+            words=word_tokenize(content)
+            # Get the English stop words
+            stop_words = set(stopwords.words('english'))
+            filtered_Stop_words = [word for word in words if word.lower() not in stop_words]
+            porter_stemmer = PorterStemmer()
+            stemmed_words = [porter_stemmer.stem(word) for word in filtered_Stop_words]
+            return { "tokenize":words,"filtered_Stop_words":filtered_Stop_words,"stemmed_words":stemmed_words,"StatusCode":201}
+        except Exception:
+            return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
+        finally:
+            file.file.close()
+
 
     def Summarization(self,file):
         try:

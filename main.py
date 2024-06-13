@@ -28,7 +28,7 @@ def Tokenization(text):
 @app.post("/TokenizationFile",tags=["FASTAPI for Tokenization Text File"])
 def TokenizationFile(file: UploadFile):
     if file.content_type=='text/plain':
-        return  nlpServices.TokenizationFile(file)
+        return  nlpServices.TokenizationStopWordFile(file)
     else:
         return {"message": "Invalid file type. Please upload txt file","StatusCode":400}
 
