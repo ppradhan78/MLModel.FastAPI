@@ -15,6 +15,7 @@ class NLPServices():
     def __init__(self):
         nltk.download('stopwords')
         nltk.download('punkt')
+        # stop_words = set(stopwords.words('english'))
 
     def Tokenization(self,text):
         words=word_tokenize(text)
@@ -140,22 +141,28 @@ class NLPServices():
     #     finally:
     #         file.file.close()
 
-    # def GetPOS(self,file):
-    #     try:
-    #         content = file.file.read()
-    #         file_location = f"files/{file.filename}"
-    #         with open(file_location, 'wb') as f:
-    #             f.write(content)
+    def GetPOS(self,file):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
             
-    #         content=content.decode("utf-8")
-    #         nlp = en_core_web_sm.load()
-    #         doc = nlp(content)
-    #         POS=[]
-    #         for token in doc:
-    #             POS.insert(1, f"{token.text}: {token.pos_} ({token.tag_})")
-           
-    #         return {"POS":POS,"StatusCode":201}
-    #     except Exception:
-    #         return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
-    #     finally:
-    #         file.file.close()        
+            content=content.decode("utf-8")
+            content=content.translate(str.maketrans('', '', string.punctuation))
+            tokenized = sent_tokenize(content)
+            POS=[]
+            for i in tokenized:
+                # Word tokenizers is used to find the words 
+                # and punctuation in a string
+                wordsList = nltk.word_tokenize(i)
+                stop_words = set(stopwords.words('english'))
+                # removing stop words from wordList
+                wordsList = [w for w in wordsList if not w in stop_words]
+                tagged = nltk.pos_tag(wordsList) 
+                POS.insert(1,tagged)
+            return {"POS":POS,"StatusCode":201}
+        except Exception:
+            return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
+        finally:
+            file.file.close()        
