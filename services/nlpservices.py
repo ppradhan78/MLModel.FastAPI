@@ -119,43 +119,43 @@ class NLPServices():
         finally:
             file.file.close()        
     
-    def GetNamedEntityRecognition (self,file):
-        try:
-            # nlp = spacy.load("en_core_web_sm")
-            content = file.file.read()
-            file_location = f"files/{file.filename}"
-            with open(file_location, 'wb') as f:
-                f.write(content)
+    # def GetNamedEntityRecognition (self,file):
+    #     try:
+    #         # nlp = spacy.load("en_core_web_sm")
+    #         content = file.file.read()
+    #         file_location = f"files/{file.filename}"
+    #         with open(file_location, 'wb') as f:
+    #             f.write(content)
             
-            content=content.decode("utf-8")
-            nlp = en_core_web_sm.load()
-            doc = nlp(content)
-            NamedEntity=[]
-            for entity in doc.ents:
-                NamedEntity.insert(1, f"{entity.text}-({entity.label_})")
+    #         content=content.decode("utf-8")
+    #         nlp = en_core_web_sm.load()
+    #         doc = nlp(content)
+    #         NamedEntity=[]
+    #         for entity in doc.ents:
+    #             NamedEntity.insert(1, f"{entity.text}-({entity.label_})")
            
-            return {"NamedEntity":NamedEntity,"StatusCode":201}
-        except Exception:
-            return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
-        finally:
-            file.file.close()
+    #         return {"NamedEntity":NamedEntity,"StatusCode":201}
+    #     except Exception:
+    #         return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
+    #     finally:
+    #         file.file.close()
 
-    def GetPOS(self,file):
-        try:
-            content = file.file.read()
-            file_location = f"files/{file.filename}"
-            with open(file_location, 'wb') as f:
-                f.write(content)
+    # def GetPOS(self,file):
+    #     try:
+    #         content = file.file.read()
+    #         file_location = f"files/{file.filename}"
+    #         with open(file_location, 'wb') as f:
+    #             f.write(content)
             
-            content=content.decode("utf-8")
-            nlp = en_core_web_sm.load()
-            doc = nlp(content)
-            POS=[]
-            for token in doc:
-                POS.insert(1, f"{token.text}: {token.pos_} ({token.tag_})")
+    #         content=content.decode("utf-8")
+    #         nlp = en_core_web_sm.load()
+    #         doc = nlp(content)
+    #         POS=[]
+    #         for token in doc:
+    #             POS.insert(1, f"{token.text}: {token.pos_} ({token.tag_})")
            
-            return {"POS":POS,"StatusCode":201}
-        except Exception:
-            return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
-        finally:
-            file.file.close()        
+    #         return {"POS":POS,"StatusCode":201}
+    #     except Exception:
+    #         return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
+    #     finally:
+    #         file.file.close()        
