@@ -46,3 +46,17 @@ def Summarization(file: UploadFile):
         return  nlpServices.Summarization(file)
     else:
         return {"message": "Invalid file type. Please upload txt file","StatusCode":400}    
+    
+@app.post("/GetNamedEntityRecognition",tags=["Get NamedEntity"])
+def GetNamedEntityRecognition(file: UploadFile):
+    if file.content_type=='text/plain':
+        return  nlpServices.GetNamedEntityRecognition(file)
+    else:
+        return {"message": "Invalid file type. Please upload txt file","StatusCode":400}    
+    
+@app.post("/GetPOS",tags=["Get NamedEntity"])
+def GetPOS(file: UploadFile):
+    if file.content_type=='text/plain':
+        return  nlpServices.GetPOS(file)
+    else:
+        return {"message": "Invalid file type. Please upload txt file","StatusCode":400}       
