@@ -9,6 +9,7 @@ from string import punctuation
 from nltk.stem import PorterStemmer
 import spacy
 import en_core_web_sm
+import string
 
 class NLPServices():
     def __init__(self):
@@ -55,6 +56,7 @@ class NLPServices():
                 f.write(content)
             
             content=content.decode("utf-8")
+            content=content.translate(str.maketrans('', '', string.punctuation))
             words=word_tokenize(content)
             # Get the English stop words
             stop_words = set(stopwords.words('english'))
