@@ -7,7 +7,6 @@ from nltk.tokenize import sent_tokenize
 from heapq import nlargest
 from string import punctuation
 from nltk.stem import PorterStemmer
-import spacy
 import en_core_web_sm
 import string
 
