@@ -148,7 +148,7 @@ class NLPServices():
             
             content=content.decode("utf-8")
 
-            content=content.translate(str.maketrans('', '', string.punctuation))
+            # content=content.translate(str.maketrans('', '', string.punctuation))
 
             tokenized = sent_tokenize(content)
             PartOfSpeach=[]
