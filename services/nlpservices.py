@@ -2,8 +2,6 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from fastapi import File, UploadFile
 import nltk
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize 
 from heapq import nlargest
 from string import punctuation
 from nltk.stem import PorterStemmer
@@ -142,23 +140,25 @@ class NLPServices():
 
     def GetPOS(self,file):
         try:
+            stop_words = set(stopwords.words('english'))
             content = file.file.read()
             file_location = f"files/{file.filename}"
             with open(file_location, 'wb') as f:
                 f.write(content)
             
             content=content.decode("utf-8")
+
             content=content.translate(str.maketrans('', '', string.punctuation))
+
             tokenized = sent_tokenize(content)
             POS=[]
-            stop_words = set(stopwords.words('english'))
             for i in tokenized:
                 # Word tokenizers is used to find the words and punctuation in a string
                 wordsList = nltk.word_tokenize(i)
                 # removing stop words from wordList
                 wordsList = [w for w in wordsList if not w in stop_words]
                 tagged = nltk.pos_tag(wordsList) 
-                # POS.insert(1,tagged)
+            POS.insert(1,tagged)
             return {"POS":POS,"StatusCode":201}
         except Exception:
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
