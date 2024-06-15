@@ -13,6 +13,8 @@ class NLPServices():
     def __init__(self):
         nltk.download('stopwords')
         nltk.download('punkt')
+        nltk.download('averaged_perceptron_tagger')
+        # nltk.download('all')
 
     def Tokenization(self,text):
         words=word_tokenize(text)
