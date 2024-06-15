@@ -151,15 +151,15 @@ class NLPServices():
             content=content.translate(str.maketrans('', '', string.punctuation))
 
             tokenized = sent_tokenize(content)
-            POS=[]
+            PartOfSpeach=[]
             for i in tokenized:
                 # Word tokenizers is used to find the words and punctuation in a string
                 wordsList = nltk.word_tokenize(i)
                 # removing stop words from wordList
                 wordsList = [w for w in wordsList if not w in stop_words]
                 tagged = nltk.pos_tag(wordsList) 
-            POS.insert(1,tagged)
-            return {"POS":POS,"StatusCode":201}
+            PartOfSpeach.insert(1,tagged)
+            return {"PartOfSpeach":PartOfSpeach,"StatusCode":201}
         except Exception:
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
         finally:
