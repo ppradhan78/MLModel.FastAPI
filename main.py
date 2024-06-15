@@ -64,6 +64,12 @@ def GetPOS(file: UploadFile):
     except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}     
 
-# @app.post("/GetPOS1",tags=["Get POS1"])
-# def GetPOS1(content):
-#         return  nlpServices.GetPOS1(content)
+@app.post("/GetBoW",tags=["Get BoW"])
+def GetBoW(file: UploadFile):
+        try:
+             if file.content_type=='text/plain':
+                  return  nlpServices.GetBoW(file)
+             else:
+                return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
+        except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}   

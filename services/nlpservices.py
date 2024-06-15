@@ -10,6 +10,10 @@ from nltk.corpus import wordnet as wn
 # import spacy
 # import en_core_web_sm
 import string
+import re 
+import numpy as np 
+import heapq 
+  
 
 class NLPServices():
     def __init__(self):
@@ -178,5 +182,46 @@ class NLPServices():
         finally:
             file.file.close()        
 
+    def GetBoW(self,file):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
+            
+            content=content.decode("utf-8")
+            text = f""" {content} """
+            dataset = nltk.sent_tokenize(text)
+            for i in range(len(dataset)):
+                dataset[i] = dataset[i].lower()
+                dataset[i] = re.sub(r'\W', ' ', dataset[i])
+                dataset[i] = re.sub(r'\s+', ' ', dataset[i])     
+    
+            word2count = {} 
+            for data in dataset:
+                words = nltk.word_tokenize(data) 
+                for word in words: 
+                    if word not in word2count.keys():
+                        word2count[word] = 1
+                    else: 
+                        word2count[word] += 1
+            
+            freq_words = heapq.nlargest(100, word2count, key=word2count.get)
+            BoW = [] 
+            for data in dataset: 
+                vector = [] 
+                for word in freq_words: 
+                    if word in nltk.word_tokenize(data):
+                        vector.append(1) 
+                    else:
+                        vector.append(0) 
+                BoW.append(vector) 
+            
+            # BoW = np.asarray(BoW)
+            return {"BoW":BoW, "WordCount":word2count,"freq_words":freq_words,"StatusCode":201}  
+        except Exception as error:
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+        finally:
+            file.file.close()    
 
     
