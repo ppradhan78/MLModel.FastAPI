@@ -6,6 +6,7 @@ from heapq import nlargest
 from string import punctuation
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet as wn
 # import spacy
 # import en_core_web_sm
 import string
@@ -65,7 +66,7 @@ class NLPServices():
             filtered_Stop_words = [word for word in words if word.lower() not in stop_words]
             porter_stemmer = PorterStemmer()
             stemmed_words = [porter_stemmer.stem(word) for word in filtered_Stop_words]
-
+            wn.ensure_loaded()
             lemmatizer = WordNetLemmatizer()
             LemmatizeWord=[]
             for word in words:
