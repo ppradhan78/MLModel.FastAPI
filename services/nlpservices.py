@@ -15,7 +15,6 @@ class NLPServices():
     def __init__(self):
         nltk.download('stopwords')
         nltk.download('punkt')
-        # stop_words = set(stopwords.words('english'))
 
     def Tokenization(self,text):
         words=word_tokenize(text)
@@ -159,7 +158,7 @@ class NLPServices():
                 # removing stop words from wordList
                 wordsList = [w for w in wordsList if not w in stop_words]
                 tagged = nltk.pos_tag(wordsList) 
-                POS.insert(1,tagged)
+                # POS.insert(1,tagged)
             return {"POS":POS,"StatusCode":201}
         except Exception:
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
