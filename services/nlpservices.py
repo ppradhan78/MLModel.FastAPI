@@ -20,6 +20,8 @@ class NLPServices():
         nltk.download('stopwords')
         nltk.download('punkt')
         nltk.download('averaged_perceptron_tagger')
+        nltk.download('maxent_ne_chunker')
+        nltk.download('maxent_ne_chunker')
         nltk.download('wordnet')
         # nltk.download('all')
 
@@ -153,6 +155,27 @@ class NLPServices():
     #         return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
     #     finally:
     #         file.file.close()
+
+    def GetNamedEntityRecognition (self,file):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
+            
+            content=content.decode("utf-8")
+            NamedEntity=[]
+            for sent in nltk.sent_tokenize(content):
+                for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sent))):
+                    if hasattr(chunk, 'label'):
+                        item=chunk.label(), ' '.join(c[0] for c in chunk)
+                        NamedEntity.insert(0,item)
+            return {"NamedEntity":NamedEntity,"StatusCode":201}
+        except Exception as error:
+            # return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+        finally:
+            file.file.close()        
 
     def GetPOS(self,file):
         try:

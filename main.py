@@ -92,4 +92,14 @@ def GetPhraseMatcher(file: UploadFile,Phras:str):
              else:
                 return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
         except Exception as error:
-            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}          
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500} 
+
+@app.post("/GetNamedEntityRecognition",tags=["Get Named Entity Recognition"])
+def GetNamedEntityRecognition(file: UploadFile):
+        try:
+             if file.content_type=='text/plain':
+                  return  nlpServices.GetNamedEntityRecognition(file)
+             else:
+                return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
+        except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}                    
