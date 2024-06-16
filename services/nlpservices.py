@@ -13,7 +13,7 @@ import string
 import re 
 import numpy as np 
 import heapq 
-  
+from nltk import ngrams
 
 class NLPServices():
     def __init__(self):
@@ -224,4 +224,25 @@ class NLPServices():
         finally:
             file.file.close()    
 
-    
+    def GetNGram(self,file,ngramsNumber):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
+            
+            content=content.decode("utf-8")
+            content=content.translate(str.maketrans('', '', string.punctuation))
+            # words=word_tokenize(content)
+            # Get the English stop words
+            # stop_words = set(stopwords.words('english'))
+            # filtered_Stop_words = [word for word in words if word.lower() not in stop_words]
+            unigrams = ngrams(content.split(), ngramsNumber)
+            gram=[]
+            for grams in unigrams:
+                gram.insert(0,grams)
+            return { "ngrams":gram,"StatusCode":201}
+        except Exception as error:
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+        finally:
+            file.file.close()

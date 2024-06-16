@@ -73,3 +73,14 @@ def GetBoW(file: UploadFile):
                 return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
         except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}   
+        
+@app.post("/GetNGram",tags=["Get BoW"])
+def GetNGram(file: UploadFile,ngramsNumber:int):
+        try:
+             if file.content_type=='text/plain':
+                  return  nlpServices.GetNGram(file,ngramsNumber)
+             else:
+                return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
+        except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+        
