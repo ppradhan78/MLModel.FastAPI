@@ -259,7 +259,7 @@ class NLPServices():
             phrase = re.compile (Phras)
             phrase = re.findall(phrase, content)
              
-            return { "phrase":phrase,"StatusCode":201}
+            return { "phrases":phrase,"StatusCode":201}
         except Exception as error:
             return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
         finally:
