@@ -246,3 +246,21 @@ class NLPServices():
             return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
         finally:
             file.file.close()
+
+    def GetPhraseMatcher(self,file,Phras):
+        try:
+            content = file.file.read()
+            file_location = f"files/{file.filename}"
+            with open(file_location, 'wb') as f:
+                f.write(content)
+            
+            content=content.decode("utf-8")
+            content=content.translate(str.maketrans('', '', string.punctuation))
+            phrase = re.compile (Phras)
+            phrase = re.findall(phrase, content)
+             
+            return { "phrase":phrase,"StatusCode":201}
+        except Exception as error:
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+        finally:
+            file.file.close()        

@@ -74,7 +74,7 @@ def GetBoW(file: UploadFile):
         except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}   
         
-@app.post("/GetNGram",tags=["Get BoW"])
+@app.post("/GetNGram",tags=["Get NGram"])
 def GetNGram(file: UploadFile,ngramsNumber:int):
         try:
              if file.content_type=='text/plain':
@@ -84,3 +84,12 @@ def GetNGram(file: UploadFile,ngramsNumber:int):
         except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
         
+@app.post("/GetPhraseMatcher",tags=["Get Phrase Matcher"])
+def GetPhraseMatcher(file: UploadFile,Phras:str):
+        try:
+             if file.content_type=='text/plain':
+                  return  nlpServices.GetPhraseMatcher(file,Phras)
+             else:
+                return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
+        except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}          
