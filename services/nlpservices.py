@@ -14,6 +14,9 @@ import re
 import numpy as np 
 import heapq 
 from nltk import ngrams
+from fastapi import FastAPI, Response
+import matplotlib.pyplot as plt
+import io
 
 class NLPServices():
     def __init__(self):
@@ -286,4 +289,19 @@ class NLPServices():
         except Exception as error:
             return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
         finally:
-            file.file.close()        
+            file.file.close()       
+    def get_plot(self):
+        try:
+            # Generate the plot
+            fig, ax = plt.subplots()
+            ax.plot([-4000, 200, -4000, 19000], [-1000,19000, 0, 300])
+            ax.set_title("Simple Plot")
+            # Save the plot to a BytesIO object
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png')
+            plt.switch_backend('agg')
+            buf.seek(0)
+            plt.close(fig)
+            return buf.read()     
+        except Exception as error:
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  

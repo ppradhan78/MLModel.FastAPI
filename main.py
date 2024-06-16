@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from services.nlpservices import NLPServices
 from fastapi import File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -102,4 +102,9 @@ def GetNamedEntityRecognition(file: UploadFile):
              else:
                 return {"message": "Invalid file type. Please upload txt file","StatusCode":400} 
         except Exception as error:
-            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}                    
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}     
+
+@app.get("/plot")
+def get_plot():
+     content=  nlpServices.get_plot() 
+     return Response(content=content, media_type="image/png")                
