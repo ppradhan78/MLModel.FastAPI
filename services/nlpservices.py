@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 import io
 from wordcloud import WordCloud
 from PIL import Image
+import pandas as pd
+import matplotlib.pyplot as plt
 
 class NLPServices():
     def __init__(self):
@@ -139,27 +141,6 @@ class NLPServices():
             return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
         finally:
             file.file.close()        
-    
-    # def GetNamedEntityRecognition (self,file):
-    #     try:
-    #         # nlp = spacy.load("en_core_web_sm")
-    #         content = file.file.read()
-    #         file_location = f"files/{file.filename}"
-    #         with open(file_location, 'wb') as f:
-    #             f.write(content)
-            
-    #         content=content.decode("utf-8")
-    #         nlp = en_core_web_sm.load()
-    #         doc = nlp(content)
-    #         NamedEntity=[]
-    #         for entity in doc.ents:
-    #             NamedEntity.insert(1, f"{entity.text}-({entity.label_})")
-           
-    #         return {"NamedEntity":NamedEntity,"StatusCode":201}
-    #     except Exception:
-    #         return {"message": "There was an error uploading the file and word tokenize","StatusCode":500}
-    #     finally:
-    #         file.file.close()
 
     def GetNamedEntityRecognition (self,file):
         try:
@@ -292,21 +273,7 @@ class NLPServices():
             return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
         finally:
             file.file.close()       
-    def get_plot(self):
-        try:
-            # Generate the plot
-            fig, ax = plt.subplots()
-            ax.plot([-4000, 200, -4000, 19000], [-1000,19000, 0, 300])
-            ax.set_title("Simple Plot")
-            # Save the plot to a BytesIO object
-            buf = io.BytesIO()
-            plt.savefig(buf, format='png')
-            plt.switch_backend('agg')
-            buf.seek(0)
-            plt.close(fig)
-            return buf.read()     
-        except Exception as error:
-            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500} 
+    
     def get_wordcloud(self,text):
         # Generate the word cloud
         wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
@@ -315,3 +282,20 @@ class NLPServices():
         wordcloud.to_image().save(buf, format='PNG')
         buf.seek(0)
         return buf.read() 
+    def create_upload_file_plot(self,file):
+        try:
+            file_location = f"files/{file.filename}"
+            with open(file_location, "wb+") as file_object:
+                file_object.write(file.file.read())
+
+            # Read the CSV file
+            df = pd.read_csv(file_location)  
+            # Generate a plot (example: plot the first two columns)
+            plt.figure()
+            df.plot(x=df.columns[0], y=df.columns[1], kind='line')
+            plot_location = "files/plot.png"
+            plt.savefig(plot_location)
+            plt.close()
+            return plot_location
+        except Exception as error: 
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}      

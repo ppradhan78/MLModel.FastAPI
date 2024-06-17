@@ -2,6 +2,8 @@ from fastapi import FastAPI, Response
 from services.nlpservices import NLPServices
 from fastapi import File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse
 
 app=FastAPI()
 origins = ["*"]
@@ -46,13 +48,6 @@ def Summarization(file: UploadFile):
         return  nlpServices.Summarization(file)
     else:
         return {"message": "Invalid file type. Please upload txt file","StatusCode":400}    
-    
-# @app.post("/GetNamedEntityRecognition",tags=["Get NamedEntity"])
-# def GetNamedEntityRecognition(file: UploadFile):
-#     if file.content_type=='text/plain':
-#         return  nlpServices.GetNamedEntityRecognition(file)
-#     else:
-#         return {"message": "Invalid file type. Please upload txt file","StatusCode":400}    
     
 @app.post("/GetPOS",tags=["Get POS"])
 def GetPOS(file: UploadFile):
@@ -115,3 +110,11 @@ def get_wordcloud(text: str):
              return Response(content, media_type="image/png")
     except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}     
+    
+@app.post("/create_upload_file_plot/",tags=["Generate Plot From CSV File"])
+async def create_upload_file_plot(file: UploadFile = File(...)):
+     try:
+             content=  nlpServices.create_upload_file_plot(file) 
+             return FileResponse(content)
+     except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}    
