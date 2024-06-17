@@ -104,7 +104,14 @@ def GetNamedEntityRecognition(file: UploadFile):
         except Exception as error:
             return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}     
 
-@app.get("/plot")
+@app.get("/plot",tags=["Generate Plot"])
 def get_plot():
      content=  nlpServices.get_plot() 
-     return Response(content=content, media_type="image/png")                
+     return Response(content=content, media_type="image/png")   
+@app.get("/wordcloud",tags=["Generate word cloud"])
+def get_wordcloud(text: str):
+    try:
+             content=  nlpServices.get_wordcloud(text) 
+             return Response(content, media_type="image/png")
+    except Exception as error:
+            return {"message": str(error) +"@"+ type(error).__name__,"StatusCode":500}     

@@ -17,6 +17,8 @@ from nltk import ngrams
 from fastapi import FastAPI, Response
 import matplotlib.pyplot as plt
 import io
+from wordcloud import WordCloud
+from PIL import Image
 
 class NLPServices():
     def __init__(self):
@@ -304,4 +306,12 @@ class NLPServices():
             plt.close(fig)
             return buf.read()     
         except Exception as error:
-            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500}  
+            return {"Exception": str(error) +"@"+ type(error).__name__,"StatusCode":500} 
+    def get_wordcloud(self,text):
+        # Generate the word cloud
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+        # Save the word cloud to a BytesIO object
+        buf = io.BytesIO()
+        wordcloud.to_image().save(buf, format='PNG')
+        buf.seek(0)
+        return buf.read() 
